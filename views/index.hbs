@@ -1,0 +1,52 @@
+{{! Add task form lets user input a new task}}
+<div class="addtask">
+
+    <form id="addtask_form" action="add" method="POST">
+        <input id="addtask_text" type="text" name="text" placeholder="task" required>
+        <input id="addtask_button" type="submit" value="add">
+    </form>
+</div>
+
+<div class="messages">
+    {{#if messages}}
+        <p class="error_msg">{{messages.error}}</p>
+        <p class="info_msg">{{messages.info}}</p>
+    {{/if}}
+</div>
+
+{{! Lists each task, if no tasks print 'No tasks to do!'
+Also adds done and delete buttons to mark a task a completed or delete it}}
+<div class="tasklist">
+
+    {{#each tasks}}
+
+        <p>{{@index}}: {{this.text}}</p>
+
+        <form action="done" method="POST">
+            <input type="hidden" name="_id" value="{{this._id}}">
+            <input type="submit" name="done" value="Done">
+        </form>
+
+        <form action="delete" method="POST">
+            <input type="hidden" name="_id" value="{{this._id}}">
+            <input class="delete_button" type="submit" name="delete" value="Delete">
+        </form>
+
+    {{else}}
+
+        <p>No tasks to do!</p>
+
+    {{/each}}
+</div>
+
+
+{{! Adds a button to mark all currently uncompleted tasks as done}}
+<div class="alldone">
+
+    {{#if tasks}}
+        <form action="alldone" method="POST">
+            <input class="all_done_button" type="submit" value="All done!">
+        </form>
+    {{/if}}
+
+</div>
